@@ -1,0 +1,27 @@
+# Конфигурационные файлы с секретами
+config.yaml
+
+# Документация для разработчиков (не нужна в репозитории)
+ARCHITECTURE.md
+REFACTORING_EXAMPLE.md
+
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go.work
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
