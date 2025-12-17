@@ -1,14 +1,12 @@
 package models
 
 import (
+	"fmt"
 	"sort"
-	"time"
+	"strings"
+	"telegram_bot_todo/format"
+	
 )
-
-type PlayerScore struct {
-	Name  string
-	Score int
-}
 
 type TeamScore struct {
 	Score         map[string]int
@@ -37,26 +35,38 @@ func (t *TeamScore) AddScore(name string) {
 	t.Score[name]++
 }
 
-func (t *TeamScore) GetScores() []PlayerScore {
+func (t *TeamScore) GetScores() string {
 	t.checkAndResetIfNewDay()
 
 	if len(t.Score) == 0 {
-		return nil
+		return ""
 	}
 
-	var players []PlayerScore
+	type playerScore struct {
+		name  string
+		score int
+	}
+
+	var players []playerScore
 	for name, score := range t.Score {
-		players = append(players, PlayerScore{Name: name, Score: score})
+		players = append(players, playerScore{name: name, score: score})
 	}
 
 	sort.Slice(players, func(i, j int) bool {
-		if players[i].Score == players[j].Score {
-			return players[i].Name < players[j].Name
+		if players[i].score == players[j].score {
+			return players[i].name < players[j].name
 		}
-		return players[i].Score > players[j].Score
+		return players[i].score > players[j].score
 	})
 
-	return players
+	var b strings.Builder
+	for i, player := range players {
+		position := i + 1
+		medal := format.GetMedalEmoji(position)
+		b.WriteString(fmt.Sprintf("%s %d. %s: %d\n", medal, position, player.name, player.score))
+	}
+
+	return b.String()
 }
 
 func (t *TeamScore) HasScores() bool {

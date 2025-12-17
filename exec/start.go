@@ -1,10 +1,11 @@
 package exec
 
 import (
+	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	"telegram_bot_todo/commands"
-	"telegram_bot_todo/interfaces"
 )
 
-func HandleStart(messenger interfaces.Messenger, chatID int64) error {
-	return messenger.SendMessage(chatID, "Привет! Я бот для подсчета очков.\n\n"+commands.GetAllCommandsList())
+func HandleStart(bot *tgbotapi.BotAPI, chatID int64) {
+	msg := tgbotapi.NewMessage(chatID, "Привет! Я бот для подсчета очков.\n\n"+commands.GetAllCommandsList())
+	bot.Send(msg)
 }

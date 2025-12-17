@@ -28,12 +28,13 @@ cd telegram_bot_todo
 2. Установите зависимости:
 ```bash
 go mod download
+go get gopkg.in/yaml.v3
 ```
 
 3. Создайте файл `config.yaml` в корне проекта (см. раздел "Конфигурация" для подробностей):
-```
-TELEGRAM_BOT_TOKEN=your_bot_token_here
-BOT_DEBUG=false
+```yaml
+telegram_bot_token: "your_bot_token_here"
+bot_debug: false
 ```
 
 4. Запустите бота:
@@ -96,19 +97,20 @@ telegram_bot_todo/
 
 Создайте файл `config.yaml` в корне проекта со следующим содержимым:
 
-```
-TELEGRAM_BOT_TOKEN=your_actual_bot_token_here
-BOT_DEBUG=false
+```yaml
+telegram_bot_token: "your_actual_bot_token_here"
+bot_debug: false
 ```
 
 **Описание параметров:**
-- `TELEGRAM_BOT_TOKEN` - токен вашего Telegram бота. Получить можно у [@BotFather](https://t.me/BotFather) в Telegram. Формат токена: `число:буквенно-цифровая_строка` (паттерн: `123456789:ABCdefGHIjklMNOpqrsTUVwxyz`, где первая часть - это ID бота, вторая - секретный ключ)
-- `BOT_DEBUG` - режим отладки. Возможные значения: `true` или `false`. По умолчанию: `false`
+- `telegram_bot_token` - токен вашего Telegram бота. Получить можно у [@BotFather](https://t.me/BotFather) в Telegram. Формат токена: `число:буквенно-цифровая_строка` (паттерн: `123456789:ABCdefGHIjklMNOpqrsTUVwxyz`, где первая часть - это ID бота, вторая - секретный ключ)
+- `bot_debug` - режим отладки. Возможные значения: `true` или `false`. По умолчанию: `false`
 
 **Важно:** 
 - Файл `config.yaml` добавлен в `.gitignore` для безопасности
 - Не коммитьте реальный токен в репозиторий
 - Замените `your_actual_bot_token_here` на реальный токен, полученный от BotFather
+- Если файл `config.yaml` не найден или содержит ошибки, приложение попытается использовать переменные окружения системы (`TELEGRAM_BOT_TOKEN`, `BOT_DEBUG`)
 
 ## Особенности реализации
 
