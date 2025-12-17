@@ -1,10 +1,6 @@
 # Конфигурационные файлы с секретами
 config.yaml
 
-# Документация для разработчиков (не нужна в репозитории)
-ARCHITECTURE.md
-REFACTORING_EXAMPLE.md
-
 # Go
 *.exe
 *.exe~

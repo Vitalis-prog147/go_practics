@@ -1,11 +1,10 @@
 package exec
 
 import (
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	"telegram_bot_todo/commands"
+	"telegram_bot_todo/interfaces"
 )
 
-func HandleHelp(bot *tgbotapi.BotAPI, chatID int64) {
-	msg := tgbotapi.NewMessage(chatID, commands.GetAllCommandsList())
-	bot.Send(msg)
+func HandleHelp(messenger interfaces.Messenger, chatID int64) error {
+	return messenger.SendMessage(chatID, commands.GetAllCommandsList())
 }

@@ -3,15 +3,15 @@ package exec
 import (
 	"fmt"
 	"strings"
-	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	"telegram_bot_todo/commands"
+	"telegram_bot_todo/interfaces"
 )
 
-func HandleUnknown(bot *tgbotapi.BotAPI, chatID int64, text string) {
+func HandleUnknown(messenger interfaces.Messenger, chatID int64, text string) error {
 	if strings.HasPrefix(text, "/") {
-		msg := tgbotapi.NewMessage(chatID,
+		return messenger.SendMessage(chatID,
 			fmt.Sprintf("❌ Неизвестная команда: %s\n\n%s",
 				text, commands.GetAllCommandsList()))
-		bot.Send(msg)
 	}
+	return nil
 }

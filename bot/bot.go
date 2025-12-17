@@ -5,11 +5,14 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	"telegram_bot_todo/commands"
 	"telegram_bot_todo/exec"
+	"telegram_bot_todo/infrastructure/telegram"
+	"telegram_bot_todo/interfaces"
 	"telegram_bot_todo/models"
 )
 
 type Bot struct {
 	api       *tgbotapi.BotAPI
+	messenger interfaces.Messenger
 	teamScore *models.TeamScore
 }
 
@@ -21,6 +24,7 @@ func New(token string) (*Bot, error) {
 
 	return &Bot{
 		api:       api,
+		messenger: telegram.NewTelegramMessenger(api),
 		teamScore: models.NewTeamScore(),
 	}, nil
 }
@@ -51,19 +55,19 @@ func (b *Bot) handleUpdate(update tgbotapi.Update) {
 
 	switch command {
 	case commands.CommandStart:
-		exec.HandleStart(b.api, chatID)
+		exec.HandleStart(b.messenger, chatID)
 
 	case commands.CommandScore:
-		exec.HandleScore(b.api, chatID, b.teamScore)
+		exec.HandleScore(b.messenger, chatID, b.teamScore)
 
 	case commands.CommandAdd:
-		exec.HandleAdd(b.api, chatID, text, b.teamScore)
+		exec.HandleAdd(b.messenger, chatID, text, b.teamScore)
 
 	case commands.CommandHelp:
-		exec.HandleHelp(b.api, chatID)
+		exec.HandleHelp(b.messenger, chatID)
 
 	default:
-		exec.HandleUnknown(b.api, chatID, text)
+		exec.HandleUnknown(b.messenger, chatID, text)
 	}
 }
 
