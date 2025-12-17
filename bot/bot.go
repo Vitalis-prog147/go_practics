@@ -32,7 +32,7 @@ func New(token string) (*Bot, error) {
 func (b *Bot) Start() error {
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
-	updates := b.api.GetUpdatesChan(u)
+	updates, _ := b.api.GetUpdatesChan(u)
 
 	fmt.Println("🤖 Бот запущен и ждет команд!")
 

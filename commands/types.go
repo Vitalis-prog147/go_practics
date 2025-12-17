@@ -1,7 +1,5 @@
 package commands
 
-import "fmt"
-
 type CommandType string
 
 const (

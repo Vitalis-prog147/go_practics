@@ -12,8 +12,8 @@ type Config struct {
 }
 
 func Load() *Config {
-	if err := godotenv.Load(); err != nil {
-		log.Println("Файл .env не найден")
+	if err := godotenv.Load("config.yaml"); err != nil {
+		log.Printf("Файл config.yaml не найден, используются переменные окружения системы: %v", err)
 	}
 
 	return &Config{
